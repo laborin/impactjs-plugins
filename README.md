@@ -1,10 +1,8 @@
-impactjs-plugins
-================
+# impactjs-plugins 
 
 Here i will be uploading my shareable ImpactJS plugins.
 
-Deep Map plugin
----------------
+## Deep Map plugin
 
 Adds 3D depth to any background map, great for creating 2.5D games. The 3D faces are drawn in a solid gray color, with simulated light coming from the center of the screen. A future version will include texture mapping, I am figuring out how to do it without changing any impactjs file, maybe setting an alternate tilesheet for the side faces of every regular tile.
 
@@ -14,4 +12,5 @@ Adds 3D depth to any background map, great for creating 2.5D games. The 3D faces
 * open weltmeister and rename any of your background maps to have "3d" at the end. For better results, use only rectangular tiles (without transparency at the edges).
 * have fun
 
-[See the plugin in action](https://www.youtube.com/watch?v=KG365l-raoQ "Deep Map plugin demo video")
+[Demo video](https://www.youtube.com/watch?v=KG365l-raoQ "Deep Map plugin demo video")
+[Demo based on the super generic run and jump sample](http://bytecreators.com/samples/deep-map/)
