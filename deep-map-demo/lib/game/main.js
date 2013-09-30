@@ -42,6 +42,12 @@ MyGame = ig.Game.extend({
 		// so set the letter spacing to -2px.
 		this.font.letterSpacing = -2;		
 		
+		// Lets override some tiles
+		ig.textureOverrides["main_3d"] = {
+			77: {"top": 176},
+			119: {"top": 179}
+		};
+
 		// Load the LevelGrasslands as required above ('game.level.grassland')
 		this.loadLevel( LevelGrasslands );
 	},
@@ -88,7 +94,13 @@ MyGame = ig.Game.extend({
 		
 		// Camera follows the player
 		this.camera.follow( this.player );
-		
+
+		if( ig.input.pressed('toggleTexture') ) {
+			for(var i = 0; i < ig.game.backgroundMaps.length; i++) if(ig.game.backgroundMaps[i].deepMapEnabled) ig.game.backgroundMaps[i].textureMappingEnabled = !ig.game.backgroundMaps[i].textureMappingEnabled;
+		}
+		if( ig.input.pressed('toggleShadow') ) {
+			for(var i = 0; i < ig.game.backgroundMaps.length; i++) if(ig.game.backgroundMaps[i].deepMapEnabled) ig.game.backgroundMaps[i].textureShadowEnabled = !ig.game.backgroundMaps[i].textureShadowEnabled;
+		}
 		// Instead of using the camera plugin, we could also just center
 		// the screen on the player directly, like this:
 		// this.screen.x = this.player.pos.x - ig.system.width/2;
@@ -154,6 +166,8 @@ MyTitle = ig.Game.extend({
 		ig.input.bind( ig.KEY.RIGHT_ARROW, 'right' );
 		ig.input.bind( ig.KEY.X, 'jump' );
 		ig.input.bind( ig.KEY.C, 'shoot' );
+		ig.input.bind( ig.KEY.A, 'toggleTexture' );
+		ig.input.bind( ig.KEY.S, 'toggleShadow' );
 		
 		// Align touch buttons to the screen size, if we have any
 		if( window.myTouchButtons ) {
@@ -198,6 +212,8 @@ MyTitle = ig.Game.extend({
 			: 'Press X or C to Play!';
 		
 		this.font.draw( startText, cx, 420, ig.Font.ALIGN.CENTER);
+		this.font.draw( 'A: Toggle Texture Mapping', cx, 450, ig.Font.ALIGN.CENTER);
+		this.font.draw( 'S: Toggle Shadows', cx, 480, ig.Font.ALIGN.CENTER);
 
 		// Draw touch buttons, if we have any
 		if( window.myTouchButtons ) {
