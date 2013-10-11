@@ -14,6 +14,8 @@ Changelog
 0.2:
 	* Now works well with resizable canvas.
 	* Added texture mapping.
+0.2.1:
+	* Fixes a bug that was breaking the texture mapping when working with a scale different than 1
 */
 
 ig.module(
@@ -93,7 +95,7 @@ ig.module(
 			}
 		*/
 
-		init: function( tilesize, data, tileset, name, gameClassName )
+		init: function( tilesize, data, tileset, name )
 		{
 			this.name = name;
 			this.parent( tilesize, data );
@@ -227,15 +229,14 @@ ig.module(
 				var tile = face.tile;
 				// Override the default tile, if set in textureOverrides property
 				if(this.textureOverrides && this.textureOverrides[face.tile] && this.textureOverrides[face.tile][face.type]) tile = this.textureOverrides[face.tile][face.type];
-				var tileX = ( Math.floor(tile * this.tilesize) % this.tiles.data.width ) * ig.system.scale;
-				var tileY = ( Math.floor(tile * this.tilesize / this.tiles.data.width) * this.tilesize ) * ig.system.scale;
-
+				var tileX = ( Math.floor(tile * this.tilesize * ig.system.scale) % this.tiles.data.width ) ;
+				var tileY = ( Math.floor(tile * this.tilesize * ig.system.scale / this.tiles.data.width) * this.tilesize * ig.system.scale) ;
 				var texturedPoints =
 				[
 					{x: face.points[0][0], y: face.points[0][1], u: tileX, v: tileY},
-					{x: face.points[1][0], y: face.points[1][1], u: tileX+this.tilesize, v: tileY},
-					{x: face.points[2][0], y: face.points[2][1], u: tileX+this.tilesize, v: tileY+this.tilesize},
-					{x: face.points[3][0], y: face.points[3][1], u: tileX, v: tileY+this.tilesize}
+					{x: face.points[1][0], y: face.points[1][1], u: tileX+this.tilesize*ig.system.scale, v: tileY},
+					{x: face.points[2][0], y: face.points[2][1], u: tileX+this.tilesize*ig.system.scale, v: tileY+this.tilesize*ig.system.scale},
+					{x: face.points[3][0], y: face.points[3][1], u: tileX, v: tileY+this.tilesize*ig.system.scale}
 				];
 				this.textureMap(ig.system.context,this.tiles.data,texturedPoints);
 				if(this.textureShadowEnabled)
